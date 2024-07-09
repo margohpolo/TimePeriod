@@ -1,9 +1,8 @@
-﻿
-namespace TimePeriod.Tests;
+﻿namespace TimePeriod.Tests.NearestDateOfDayFeature;
 
-public class NearestDateOfDayTestData
+public class AnyNearestDateOfDayTestData
 {
-    public static object[] TestInputSunday
+    public static object[] ScenarioSunday
         =>
         [
             new DateTimeOffset(2024, 6, 23, 1, 0, 0, TimeSpan.Zero),
@@ -16,7 +15,7 @@ public class NearestDateOfDayTestData
             new DateOnly(2024, 6, 22)
         ];
 
-    public static object[] TestInputMonday
+    public static object[] ScenarioMonday
         =>
         [
             new DateTimeOffset(2024, 6, 24, 1, 0, 0, TimeSpan.Zero),
@@ -29,7 +28,7 @@ public class NearestDateOfDayTestData
             new DateOnly(2024, 6, 22)
         ];
 
-    public static object[] TestInputTuesday
+    public static object[] ScenarioTuesday
         =>
         [
             new DateTimeOffset(2024, 6, 25, 1, 0, 0, TimeSpan.Zero),
@@ -42,7 +41,7 @@ public class NearestDateOfDayTestData
             new DateOnly(2024, 6, 22)
         ];
 
-    public static object[] TestInputWednesday
+    public static object[] ScenarioWednesday
         =>
         [
             new DateTimeOffset(2024, 6, 26, 1, 0, 0, TimeSpan.Zero),
@@ -55,7 +54,7 @@ public class NearestDateOfDayTestData
             new DateOnly(2024, 6, 29)
         ];
 
-    public static object[] TestInputThursday
+    public static object[] ScenarioThursday
         =>
         [
             new DateTimeOffset(2024, 6, 27, 1, 0, 0, TimeSpan.Zero),
@@ -68,7 +67,7 @@ public class NearestDateOfDayTestData
             new DateOnly(2024, 6, 29)
         ];
 
-    public static object[] TestInputFriday
+    public static object[] ScenarioFriday
         =>
         [
             new DateTimeOffset(2024, 6, 28, 1, 0, 0, TimeSpan.Zero),
@@ -81,7 +80,7 @@ public class NearestDateOfDayTestData
             new DateOnly(2024, 6, 29)
         ];
 
-    public static object[] TestInputSaturday
+    public static object[] ScenarioSaturday
         =>
         [
             new DateTimeOffset(2024, 6, 29, 1, 0, 0, TimeSpan.Zero),
@@ -95,11 +94,11 @@ public class NearestDateOfDayTestData
         ];
 
     public static IEnumerable<object[]> TestInputAllDays
-        => [TestInputSunday,
-            TestInputMonday,
-            TestInputTuesday,
-            TestInputWednesday,
-            TestInputThursday,
-            TestInputFriday,
-            TestInputSaturday];
+        => [ScenarioSunday,
+            ScenarioMonday,
+            ScenarioTuesday,
+            ScenarioWednesday,
+            ScenarioThursday,
+            ScenarioFriday,
+            ScenarioSaturday];
 }

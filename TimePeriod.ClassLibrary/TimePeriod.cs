@@ -1,17 +1,17 @@
 ﻿namespace TimePeriod.ClassLibrary;
 
-public struct TimePeriod
+public record DateTimePeriod
 {
     public DateTime Start;
     public DateTime End;
 
-    public TimePeriod(DateTime start, DateTime end)
+    public DateTimePeriod(DateTime start, DateTime end)
     {
         Start = start;
         End = end;
     }
 
-    public TimePeriod(DateTimeOffset start, DateTimeOffset end)
+    public DateTimePeriod(DateTimeOffset start, DateTimeOffset end)
     {
         Start = start.DateTime;
         End = end.DateTime;

@@ -21,13 +21,63 @@ public static class DateTimeHelper
                 => input.AddDays(diff),
 
             _ when diff > 0
-                => input.AddDays(-7 + diff),
+                => input.AddDays(diff - 7),
+
+            _ when diff < 0
+                => input.AddDays(diff + 7),
+
+            //Should never hit
+            _ => throw new NotImplementedException($"[GetNearestDateOfDay] diff of {diff} not implemented.")
+        };
+    }
+
+    public static DateOnly DateOfPastNearestDay(this DateTimeOffset input, DayOfWeek dayOfWeek)
+        => DateOfPastNearestDay(DateOnly.FromDateTime(input.DateTime), dayOfWeek);
+    public static DateOnly DateOfPastNearestDay(this DateTime input, DayOfWeek dayOfWeek)
+        => DateOfPastNearestDay(DateOnly.FromDateTime(input), dayOfWeek);
+
+    public static DateOnly DateOfPastNearestDay(this DateOnly input, DayOfWeek dayOfWeek)
+    {
+        int diff = dayOfWeek - input.DayOfWeek;
+
+        return diff switch
+        {
+            _ when diff.Equals(0)
+                => input,
+
+            _ when diff > 0
+                => input.AddDays(diff - 7),
+
+            _ when diff < 0
+                => input.AddDays(diff),
+
+            //Should never hit
+            _ => throw new NotImplementedException($"[DateOfPastNearestDay] diff of {diff} not implemented.")
+        };
+    }
+
+    public static DateOnly DateOfUpcomingNearestDay(this DateTimeOffset input, DayOfWeek dayOfWeek)
+        => DateOfUpcomingNearestDay(DateOnly.FromDateTime(input.DateTime), dayOfWeek);
+    public static DateOnly DateOfUpcomingNearestDay(this DateTime input, DayOfWeek dayOfWeek)
+        => DateOfUpcomingNearestDay(DateOnly.FromDateTime(input), dayOfWeek);
+
+    public static DateOnly DateOfUpcomingNearestDay(this DateOnly input, DayOfWeek dayOfWeek)
+    {
+        int diff = dayOfWeek - input.DayOfWeek;
+
+        return diff switch
+        {
+            _ when diff.Equals(0)
+                => input,
+
+            _ when diff > 0
+                => input.AddDays(diff),
 
             _ when diff < 0
                 => input.AddDays(7 + diff),
 
             //Should never hit
-            _ => throw new NotImplementedException($"[GetNearestDateOfDay] diff of {diff} not implemented.")
+            _ => throw new NotImplementedException($"[DateOfUpcomingNearestDay] diff of {diff} not implemented.")
         };
     }
 }

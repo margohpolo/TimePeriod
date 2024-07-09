@@ -1,4 +1,6 @@
 ﻿
+using TimePeriod.ClassLibrary;
+
 namespace TimePeriod.Tests;
 
 public class TimePeriodTests
@@ -36,8 +38,7 @@ public class TimePeriodTests
         DateTimeOffset value,
         bool expectedResult)
     {
-        //TODO: Fix naming clash issue
-        TimePeriod.ClassLibrary.TimePeriod timePeriod = new(start, end);
+        DateTimePeriod timePeriod = new(start, end);
         bool result = timePeriod.IsValueWithin(value);
 
         Assert.Equal(expectedResult, result);
