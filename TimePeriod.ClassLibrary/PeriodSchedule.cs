@@ -41,35 +41,35 @@ public record PeriodSchedule
     {
         //MVP; not the best design.
         if (!this.HasTimePeriod)
-            //&& value.IsWithinPeriod(this.RecurringSchedule))
         {
-            //Not a good solution
-            DateTime start = new DateTime(
-                    date: value.DateOfPastNearestDay(this.RecurringSchedule.Start.Day),
-                    time: this.RecurringSchedule.Start.Time);
-
-            DateTime end = new DateTime(
-                    date: value.DateOfUpcomingNearestDay(this.RecurringSchedule.End.Day),
-                    time: this.RecurringSchedule.End.Time);
-
-            //TODO: Refactor & use ScheduleHelper.
-            //This should be handled earlier; not here.
-            if (end - start <= TimeSpan.FromDays(7))
-            {
-                this.TimePeriod = new DateTimePeriod(start, end);
-            }
-
-            ////Original: Still cleaner
-            //this.TimePeriod = new DateTimePeriod(
-            //    start: new DateTime(
-            //        date: value.DateOfPastNearestDay(this.RecurringSchedule.Start.Day),
-            //        time: this.RecurringSchedule.Start.Time),
-            //    end: new DateTime(
-            //        date: value.DateOfUpcomingNearestDay(this.RecurringSchedule.End.Day),
-            //        time: this.RecurringSchedule.End.Time));
+            this.TimePeriod = GetPeriodOrNull(value);
         }
-        //else...? Needed?
     }
+
+    //Possible TODO: Maybe use a ScheduleHelper?
+    private DateTimePeriod? GetPeriodOrNull(DateTime value)
+    {
+        DateTime start = GetNearestPastStart(value);
+
+        DateTime end = GetNearestUpcomingEnd(value);
+
+        return IsStartAndEndWithinAWeekApart(start, end)
+            ? new DateTimePeriod(start, end)
+            : null;
+    }
+
+    private DateTime GetNearestPastStart(DateTime value)
+        => new(
+            date: value.DateOfPastNearestDay(this.RecurringSchedule.Start.Day),
+            time: this.RecurringSchedule.Start.Time);
+
+    private DateTime GetNearestUpcomingEnd(DateTime value)
+        => new(
+            date: value.DateOfUpcomingNearestDay(this.RecurringSchedule.End.Day),
+            time: this.RecurringSchedule.End.Time);
+
+    private static bool IsStartAndEndWithinAWeekApart(DateTime start, DateTime end)
+        => end - start <= TimeSpan.FromDays(7);
 }
 
 public record struct RecurringSchedule

@@ -80,4 +80,29 @@ public static class DateTimeHelper
             _ => throw new NotImplementedException($"[DateOfUpcomingNearestDay] diff of {diff} not implemented.")
         };
     }
+
+    public static bool IsWithinSchedule(
+        this DateTime value,
+        DayOfWeek startDay, TimeOnly startTime,
+        DayOfWeek endDay, TimeOnly endTime)
+        => value.IsWithinSchedule(
+            new RecurringSchedule(
+                startDay, startTime, 
+                endDay, endTime));
+
+    public static bool IsWithinSchedule(
+        this DateTime value,
+        ScheduleBoundary start,
+        ScheduleBoundary end)
+        => value.IsWithinSchedule(new RecurringSchedule(start, end));
+
+    public static bool IsWithinSchedule(
+        this DateTime value,
+        RecurringSchedule recurringSchedule)
+    {
+        PeriodSchedule periodSchedule = new(recurringSchedule);
+        periodSchedule.SetToNearest(value);
+
+        return periodSchedule.HasTimePeriod;
+    }
 }
